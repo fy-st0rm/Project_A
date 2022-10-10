@@ -10,12 +10,12 @@ OBJ = *.o
 OUT = game.exe
 
 build:
+	$(MAKE) --no-print-directory game_cmp_mob
 	$(MAKE) --no-print-directory game_cmp_player
 	$(MAKE) --no-print-directory game_cmp_game
 	$(MAKE) --no-print-directory game_cmp_main
 	$(MAKE) --no-print-directory game_build
 	$(MAKE) --no-print-directory game_clean
-	$(MAKE) --no-print-directory game_run
 
 game_cmp_main:
 	$(CC) $(LINC) -c main.cpp global.cpp
@@ -23,8 +23,11 @@ game_cmp_main:
 game_cmp_game:
 	$(CC) $(LINC) -c game/*.cpp
 
+game_cmp_mob:
+	$(CC) $(LINC) -c mob/*.cpp
+
 game_cmp_player:
-	$(CC) $(LINC) -c player/*.cpp
+	$(CC) $(LINC) -c mob/player/*.cpp
 
 game_build:
 	$(CC) -o $(OUT) $(OBJ) $(LIBP) $(LIB)

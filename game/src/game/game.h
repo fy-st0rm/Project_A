@@ -1,6 +1,6 @@
 #pragma once
 #include "../global.h"
-#include "../player/player.h"
+#include "../mob/player/player.h"
 
 class Game : public Sparky::Scene
 {

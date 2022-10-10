@@ -4,7 +4,7 @@ Game::Game(Sparky::Application* app)
 	:app(app)
 {
 	// Constructing player TODO: This is temporary. Player will be spawn according to the map
-	this->player = std::make_shared<Player>(glm::vec3(100, 100, 0), glm::vec2(100, 100));
+	this->player = std::make_shared<Player>(glm::vec3(100, 100, 0));
 	
 	Sparky::Log::sucess("Constructed game.", Sparky::SPARKY_NULL);
 }
