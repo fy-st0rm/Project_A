@@ -11,7 +11,9 @@
 #define ZOOM_HEIGHT ZOOM_WIDTH / ASPECT_RATIO
 #define FPS 60.0f
 
-// Global paths
+// Scene names
+#define GAME      "game"
+#define MAIN_MENU "main_menu"
 
 // Global variables
 class Global
@@ -19,7 +21,9 @@ class Global
 public:
 	static std::shared_ptr<Sparky::OrthoCamera>   camera;
 	static std::shared_ptr<Sparky::QuadRenderer>  renderer;
+	static std::shared_ptr<Sparky::UIRenderer>    ui_renderer;
 	static std::shared_ptr<Sparky::EntityManager> e_manager;
+	static std::shared_ptr<Sparky::EntityManager> ui_e_manager;
 	static std::shared_ptr<Sparky::Texture>       white;
 
 public:

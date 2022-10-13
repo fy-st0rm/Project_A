@@ -12,6 +12,8 @@ OUT = game.exe
 build:
 	$(MAKE) --no-print-directory game_cmp_mob
 	$(MAKE) --no-print-directory game_cmp_player
+	$(MAKE) --no-print-directory game_cmp_ui
+	$(MAKE) --no-print-directory game_cmp_menu
 	$(MAKE) --no-print-directory game_cmp_game
 	$(MAKE) --no-print-directory game_cmp_main
 	$(MAKE) --no-print-directory game_build
@@ -22,6 +24,12 @@ game_cmp_main:
 
 game_cmp_game:
 	$(CC) $(LINC) -c game/*.cpp
+
+game_cmp_menu:
+	$(CC) $(LINC) -c menu/*.cpp
+
+game_cmp_ui:
+	$(CC) $(LINC) -c menu/ui_elements/*.cpp
 
 game_cmp_mob:
 	$(CC) $(LINC) -c mob/*.cpp
