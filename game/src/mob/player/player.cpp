@@ -6,10 +6,12 @@ Player::Player(glm::vec3 pos)
 	this->init(pos, size, PLAYER_SPEED, PLAYER_IMG);
 	this->set_up_frames();
 
+	// TODO: temporary item
 	this->item_texture = std::make_shared<Sparky::Texture>("assets/sword.png");
-	this->item = Global::e_manager->add_entity<Sparky::Entity>(Global::e_manager);
-	this->item_tcomp = this->item->add_component<Sparky::TransformComponent>(pos, glm::vec2(25, 12), rotation_x(this->item_angle));
-	this->item->add_component<Sparky::RenderComponent>(glm::vec4(1, 1, 1, 1), glm::vec4(0,0,1,1), this->item_texture);
+
+	// Creating inventory
+	this->inventory = std::make_shared<Inventory>(MAX_INVENTORY_SIZE);
+	this->inventory->add_item("sword", this->item_texture);
 }
 
 Player::~Player()
@@ -25,8 +27,27 @@ void Player::set_up_frames()
 	this->acomp->switch_state(states);
 }
 
+void Player::create_curr_item()
+{
+	// Getting the current item texture and constructing the item
+	std::shared_ptr<Sparky::Texture> texture = this->inventory->get_selected_item();
+	if (texture != nullptr)
+	{
+		this->curr_item = Global::e_manager->add_entity<Sparky::Entity>(Global::e_manager);
+		this->curr_item->add_component<Sparky::TransformComponent>(glm::vec3(0,0,0), glm::vec2(25, 12), rotation_x(0.0f));
+		this->curr_item->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0,0,1,1), texture);
+	}
+	else if (this->curr_item != nullptr)
+	{
+		Global::e_manager->remove_entity_by_id(this->curr_item->get_id());
+		this->curr_item = nullptr;
+	}
+}
+
 void Player::on_event(SparkyEvent event)
 {
+	this->inventory->handle_event(event);
+
 	if (event.type == SDL_KEYDOWN)
 	{
 		switch (event.key.keysym.sym)
@@ -68,6 +89,10 @@ void Player::on_event(SparkyEvent event)
 				this->movement[RIGHT] = false;
 				break;
 		}
+	}
+	else if (event.type == SDL_MOUSEBUTTONDOWN)
+	{
+		this->create_curr_item();
 	}
 }
 
@@ -112,7 +137,13 @@ void Player::calc_item_pos(Sparky::TransformComponent* item_tcomp)
 
 void Player::on_update(double dt)
 {
-	this->calc_item_pos(this->item_tcomp);
+	if (this->curr_item)
+	{
+		// Calculating the position of the holded item
+		Sparky::TransformComponent* tcomp = this->curr_item->get_component<Sparky::TransformComponent>();
+		this->calc_item_pos(tcomp);
+	}
 	this->update_movement(dt);
 	this->update_animation();
+	this->inventory->update();
 }

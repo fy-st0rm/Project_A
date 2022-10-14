@@ -1,15 +1,6 @@
 #pragma once
 #include "../mob.h"
-
-// Player sprite informations
-#define PLAYER_IMG "assets/player.png"
-#define PLAYER_IMG_MAX_CNT_X 9.0f
-#define PLAYER_IMG_MAX_CNT_Y 1.0f
-#define PLAYER_IMG_W 16.0f
-#define PLAYER_IMG_H 28.0f
-#define PLAYER_SPEED 0.2f
-#define ANIME_SPEED  19.0f
-
+#include "../../inventory/inventory.h"
 
 class Player : public Mob
 {
@@ -24,12 +15,15 @@ public:
 
 private:
 	void calc_item_pos(Sparky::TransformComponent* item_tcomp);
+	void create_curr_item();
 
 private:
-	// TODO: This is temporary for testing item weilding
+	std::shared_ptr<Inventory> inventory;
+
 	float item_radius = 30.0f;
 	float item_angle  = 0.0f;
-	Sparky::Entity* item;
+	Sparky::Entity* curr_item = nullptr;
+
+	//TODO: temp texture
 	std::shared_ptr<Sparky::Texture> item_texture;
-	Sparky::TransformComponent* item_tcomp;
 };

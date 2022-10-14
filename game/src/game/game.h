@@ -9,11 +9,13 @@ public:
 	~Game();
 
 public:
+	void on_entry();
+	void on_exit();
 	void on_event(SparkyEvent event);
 	void on_update(double dt);
 
 private:
 	Sparky::Application* app;
 
-	std::shared_ptr<Player> player;
+	std::shared_ptr<Player> player = nullptr;
 };

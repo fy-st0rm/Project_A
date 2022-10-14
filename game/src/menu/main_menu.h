@@ -1,11 +1,5 @@
 #include "../global.h"
-#include "ui_elements/button.h"
-
-#define BUTTON_IMG "assets/buttons.png"
-#define BUTTON_MAX_CNT_X 4
-#define BUTTON_MAX_CNT_Y 1
-#define BUTTON_W 181
-#define BUTTON_H 47
+#include "../ui_elements/button.h"
 
 class MainMenu : public Sparky::Scene
 {
@@ -14,6 +8,8 @@ public:
 	~MainMenu();
 
 public:
+	void on_entry();
+	void on_exit();
 	void on_event(SparkyEvent event);
 	void on_update(double dt);
 

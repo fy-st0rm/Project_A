@@ -16,6 +16,11 @@
 class Mob
 {
 public:
+	~Mob()
+	{
+		Global::e_manager->remove_entity_by_id(this->entity->get_id());
+	}
+
 	glm::vec3 get_pos() const   { return this->tcomp->get_pos(); }
 	void set_pos(glm::vec3 pos) { this->tcomp->set_pos(pos); }
 
