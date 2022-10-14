@@ -31,11 +31,9 @@ void Inventory::generate_ui()
 
 void Inventory::unselect_all()
 {
-	std::unordered_map<std::string, std::shared_ptr<Sparky::UIElement>> elements = Global::ui_renderer->get_elements();
-
 	for (int i = 0; i < this->size; i++)
 	{
-		Slot* element = (Slot*) elements[std::to_string(i)].get();
+		Slot* element = (Slot*) Global::ui_renderer->get_ui_element(std::to_string(i));
 		element->unselect();
 	}
 }
@@ -73,8 +71,7 @@ void Inventory::add_new_item(const std::string& name, std::shared_ptr<Sparky::Te
 	int slot = this->item_buffer.size() - 1;
 
 	// Getting the slot
-	std::unordered_map<std::string, std::shared_ptr<Sparky::UIElement>> elements = Global::ui_renderer->get_elements();
-	Slot* element = (Slot*) elements[std::to_string(slot)].get();
+	Slot* element = (Slot*) Global::ui_renderer->get_ui_element(std::to_string(slot));
 
 	// Adding item to the slot
 	element->add_item(item_texture);

@@ -31,16 +31,18 @@ void Player::create_curr_item()
 {
 	// Getting the current item texture and constructing the item
 	std::shared_ptr<Sparky::Texture> texture = this->inventory->get_selected_item();
+
+	if (this->curr_item != nullptr)
+	{
+		Global::e_manager->remove_entity_by_id(this->curr_item->get_id());
+		this->curr_item = nullptr;
+	}
+	
 	if (texture != nullptr)
 	{
 		this->curr_item = Global::e_manager->add_entity<Sparky::Entity>(Global::e_manager);
 		this->curr_item->add_component<Sparky::TransformComponent>(glm::vec3(0,0,0), glm::vec2(25, 12), rotation_x(0.0f));
 		this->curr_item->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0,0,1,1), texture);
-	}
-	else if (this->curr_item != nullptr)
-	{
-		Global::e_manager->remove_entity_by_id(this->curr_item->get_id());
-		this->curr_item = nullptr;
 	}
 }
 
