@@ -6,12 +6,8 @@ Player::Player(glm::vec3 pos)
 	this->init(pos, size, PLAYER_SPEED, PLAYER_IMG);
 	this->set_up_frames();
 
-	// TODO: temporary item
-	this->item_texture = std::make_shared<Sparky::Texture>("assets/sword.png");
-
 	// Creating inventory
 	this->inventory = std::make_shared<Inventory>(MAX_INVENTORY_SIZE);
-	this->inventory->add_item("sword", this->item_texture);
 }
 
 Player::~Player()
@@ -29,20 +25,26 @@ void Player::set_up_frames()
 
 void Player::create_curr_item()
 {
-	// Getting the current item texture and constructing the item
-	std::shared_ptr<Sparky::Texture> texture = this->inventory->get_selected_item();
-
+	// Removing the previous item
 	if (this->curr_item != nullptr)
 	{
 		Global::e_manager->remove_entity_by_id(this->curr_item->get_id());
 		this->curr_item = nullptr;
 	}
 	
-	if (texture != nullptr)
+	// Getting the current item texture and constructing the item
+	Item* item = this->inventory->get_selected_item();
+
+	// Creating the item
+	if (item != nullptr)
 	{
+		std::shared_ptr<Sparky::Texture> texture = item->get_entity_texture();
+		glm::vec4 tex_cord = item->get_entity_tex_cord();
+		glm::vec2 size = item->get_entity_size();
+
 		this->curr_item = Global::e_manager->add_entity<Sparky::Entity>(Global::e_manager);
-		this->curr_item->add_component<Sparky::TransformComponent>(glm::vec3(0,0,0), glm::vec2(25, 12), rotation_x(0.0f));
-		this->curr_item->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0,0,1,1), texture);
+		this->curr_item->add_component<Sparky::TransformComponent>(glm::vec3(0,0,0), size, rotation_x(0.0f));
+		this->curr_item->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), tex_cord, texture);
 	}
 }
 
@@ -137,6 +139,25 @@ void Player::calc_item_pos(Sparky::TransformComponent* item_tcomp)
 	item_tcomp->set_pos(pos);
 }
 
+void Player::handle_triggers()
+{
+	Sparky::Entity* ent = this->bcomp->get_collided_entity();
+	if (ent)
+	{
+		if (ent->has_component<Sparky::TagComponent>())
+		{
+			Sparky::TagComponent* tag = ent->get_component<Sparky::TagComponent>();
+
+			// Item trigger
+			if (tag->tag == ITEM_TAG)
+			{
+				Item* item = (Item*) ent;
+				this->inventory->add_item(item->name, item);
+			}
+		}
+	}
+}
+
 void Player::on_update(double dt)
 {
 	if (this->curr_item)
@@ -145,6 +166,8 @@ void Player::on_update(double dt)
 		Sparky::TransformComponent* tcomp = this->curr_item->get_component<Sparky::TransformComponent>();
 		this->calc_item_pos(tcomp);
 	}
+
+	this->handle_triggers();
 	this->update_movement(dt);
 	this->update_animation();
 	this->inventory->update();

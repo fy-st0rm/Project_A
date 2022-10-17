@@ -16,6 +16,7 @@ public:
 private:
 	void calc_item_pos(Sparky::TransformComponent* item_tcomp);
 	void create_curr_item();
+	void handle_triggers();
 
 private:
 	std::shared_ptr<Inventory> inventory;

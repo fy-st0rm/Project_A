@@ -65,41 +65,42 @@ void Inventory::update()
 	Global::ui_renderer->update();
 }
 
-void Inventory::add_new_item(const std::string& name, std::shared_ptr<Sparky::Texture> item_texture)
+void Inventory::add_new_item(const std::string& name, Item* item)
 {
-	this->item_buffer[name] = std::make_pair(1, item_texture);
+	this->item_buffer[name] = 1;
 	int slot = this->item_buffer.size() - 1;
 
 	// Getting the slot
 	Slot* element = (Slot*) Global::ui_renderer->get_ui_element(std::to_string(slot));
 
 	// Adding item to the slot
-	element->add_item(item_texture);
+	element->add_item(item);
 }
 
 void Inventory::add_existing_item(const std::string& name)
 {
-	std::pair<int, std::shared_ptr<Sparky::Texture>> item = this->item_buffer[name];
-	item.first++;
-	this->item_buffer[name] = item;
+	this->item_buffer[name]++;
 }
 
-void Inventory::add_item(const std::string& name, std::shared_ptr<Sparky::Texture> item_texture)
+void Inventory::add_item(const std::string& name, Item* item)
 {
 	if (this->item_buffer.size() >= this->size) return;
 
 	if (this->item_buffer.find(name) == this->item_buffer.end())
-		this->add_new_item(name, item_texture);
+		this->add_new_item(name, item);
 	else
 		this->add_existing_item(name);
+
+	// Removing the item from entity manager
+	Global::e_manager->remove_entity_by_id(item->get_id());
 }
 
-std::shared_ptr<Sparky::Texture> Inventory::get_selected_item()
+Item* Inventory::get_selected_item()
 {
 	if (this->curr_slot < 0) return nullptr;
 	if (this->curr_slot >= this->item_buffer.size()) return nullptr;
 
-	auto it = this->item_buffer.begin();
-	std::advance(it, this->curr_slot);
-	return it->second.second;
+	// Returning the item from slot
+	Slot* element = (Slot*) Global::ui_renderer->get_ui_element(std::to_string(this->curr_slot));
+	return element->get_item();
 }

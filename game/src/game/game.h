@@ -1,6 +1,7 @@
 #pragma once
 #include "../global.h"
 #include "../mob/player/player.h"
+#include "../item/sword.h"
 
 class Game : public Sparky::Scene
 {
@@ -16,6 +17,5 @@ public:
 
 private:
 	Sparky::Application* app;
-
 	std::shared_ptr<Player> player = nullptr;
 };

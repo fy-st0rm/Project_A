@@ -1,5 +1,6 @@
 #pragma once
 #include "../global.h"
+#include "../item/item.h"
 
 
 class Slot : public Sparky::UIElement
@@ -14,8 +15,11 @@ public:
 	void select()   { this->state = ACTIVE;   }
 	void unselect() { this->state = INACTIVE; }
 
-	void add_item(std::shared_ptr<Sparky::Texture> texture);
+	void add_item(Item* item);
 	void remove_item();
+
+public:
+	Item* get_item() { return this->slot_item; }
 
 private:
 	void render_item();
@@ -24,7 +28,7 @@ private:
 	ButtonState state;
 	glm::vec4 active, inactive;
 
-	Sparky::Entity* item = nullptr;
+	Item* slot_item = nullptr;
 	Sparky::TransformComponent* tcomp;
 	Sparky::RenderComponent* rcomp;
 };

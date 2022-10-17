@@ -42,6 +42,7 @@ protected:
 	Sparky::TransformComponent* tcomp;
 	Sparky::RenderComponent* rcomp;
 	Sparky::AnimationComponent* acomp;
+	Sparky::BoxColliderComponent* bcomp;
 };
 
 // Function to make camera follow a mob

@@ -9,6 +9,7 @@ void Mob::init(glm::vec3 pos, glm::vec2 size, float speed, const std::string& im
 	this->tcomp  = this->entity->add_component<Sparky::TransformComponent>(pos, size, rotation_x(this->angle));
 	this->rcomp  = this->entity->add_component<Sparky::RenderComponent>(glm::vec4(1,1,1,1), glm::vec4(0,0,1,1), this->texture);
 	this->acomp  = this->entity->add_component<Sparky::AnimationComponent>();
+	this->bcomp  = this->entity->add_component<Sparky::BoxColliderComponent>(glm::vec4(pos.x, pos.y, size.x, size.y));
 
 	this->id = this->entity->get_id();
 	this->reset_movement();
