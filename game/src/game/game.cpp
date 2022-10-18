@@ -14,7 +14,7 @@ void Game::on_entry()
 	// Constructing player TODO: This is temporary. Player will be spawn according to the map
 	this->player = std::make_shared<Player>(glm::vec3(100, 100, 0));
 
-	Sword sword(glm::vec3(200, 100, 0), IRON);
+	Sword sword(glm::vec3(200, 100, 0), GOLD);
 }
 
 void Game::on_exit()

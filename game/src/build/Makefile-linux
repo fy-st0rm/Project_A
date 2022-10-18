@@ -1,0 +1,59 @@
+CC = g++ -w
+
+SP = ../../sparky_2.0/sparky/
+LINC = -I$(SP) -I$(SP)vendor/GLEW/include -I$(SP)vendor/SDL2_64bit/include -I$(SP)vendor/SDL2_64bit/include/SDL2 -I$(SP)vendor/imgui/
+LIBP = -L../../sparky_2.0/bin/
+LIB = -lsparky -lmingw32 -lglew32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -limm32
+
+CPP = *.cpp
+OBJ = *.o
+OUT = game
+
+linux_build:
+	@echo "==-- Compiling for linux --=="
+	$(MAKE) --no-print-directory linux_game_cmp_mob
+	$(MAKE) --no-print-directory linux_game_cmp_player
+	$(MAKE) --no-print-directory linux_game_cmp_item
+	$(MAKE) --no-print-directory linux_game_cmp_inventory
+	$(MAKE) --no-print-directory linux_game_cmp_ui
+	$(MAKE) --no-print-directory linux_game_cmp_menu
+	$(MAKE) --no-print-directory linux_game_cmp_game
+	$(MAKE) --no-print-directory linux_game_cmp_main
+	$(MAKE) --no-print-directory linux_game_build
+	$(MAKE) --no-print-directory linux_game_clean
+	@echo "==-- Sucessfully compiled --=="
+
+linux_game_cmp_mob:
+	$(CC) $(LINC) -c mob/*.cpp
+
+linux_game_cmp_player:
+	$(CC) $(LINC) -c mob/player/*.cpp
+
+linux_game_cmp_item:
+	$(CC) $(LINC) -c item/*.cpp
+
+linux_game_cmp_inventory:
+	$(CC) $(LINC) -c inventory/*.cpp
+
+linux_game_cmp_ui:
+	$(CC) $(LINC) -c ui_elements/*.cpp
+	
+linux_game_cmp_menu:
+	$(CC) $(LINC) -c menu/*.cpp
+
+linux_game_cmp_game:
+	$(CC) $(LINC) -c game/*.cpp
+
+linux_game_cmp_main:
+	$(CC) $(LINC) -c main.cpp global.cpp
+
+linux_game_build:
+	$(CC) -o $(OUT) $(OBJ) $(LIBP) $(LIB)
+	mv $(OUT) ..\bin
+
+linux_game_clean:
+	rm *.o
+
+linux_game_run:
+	..\bin\$(OUT)
+

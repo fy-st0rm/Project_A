@@ -1,0 +1,58 @@
+WIN_CC = g++ -w
+WIN_SP = ../../sparky_2.0/sparky/
+WIN_LINC = -I$(SP) -I$(SP)vendor/GLEW/include -I$(SP)vendor/SDL2_64bit/include -I$(SP)vendor/SDL2_64bit/include/SDL2 -I$(SP)vendor/imgui/
+WIN_LIBP = -L../../sparky_2.0/bin/
+WIN_LIB = -lsparky -lmingw32 -lopengl32 -lUser32 -lGdi32 -lShell32 -lglew32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -limm32
+WIN_CPP = *.cpp
+WIN_OBJ = *.o
+WIN_OUT = game.exe
+
+win_build:
+	@echo "==-- Compiling for windows --=="
+	$(MAKE) --no-print-directory win_game_cmp_mob
+	$(MAKE) --no-print-directory win_game_cmp_player
+	$(MAKE) --no-print-directory win_game_cmp_item
+	$(MAKE) --no-print-directory win_game_cmp_inventory
+	$(MAKE) --no-print-directory win_game_cmp_ui
+	$(MAKE) --no-print-directory win_game_cmp_menu
+	$(MAKE) --no-print-directory win_game_cmp_game
+	$(MAKE) --no-print-directory win_game_cmp_main
+	$(MAKE) --no-print-directory win_game_build
+	$(MAKE) --no-print-directory win_game_clean
+	@echo "==-- Sucessfully compiled --=="
+
+win_game_cmp_mob:
+	$(WIN_CC) $(WIN_LINC) -c mob/*.cpp
+
+win_game_cmp_player:
+	$(WIN_CC) $(WIN_LINC) -c mob/player/*.cpp
+
+win_game_cmp_item:
+	$(WIN_CC) $(WIN_LINC) -c item/*.cpp
+
+win_game_cmp_inventory:
+	$(WIN_CC) $(WIN_LINC) -c inventory/*.cpp
+
+win_game_cmp_ui:
+	$(WIN_CC) $(WIN_LINC) -c ui_elements/*.cpp
+	
+win_game_cmp_menu:
+	$(WIN_CC) $(WIN_LINC) -c menu/*.cpp
+
+win_game_cmp_game:
+	$(WIN_CC) $(WIN_LINC) -c game/*.cpp
+
+win_game_cmp_main:
+	$(WIN_CC) $(WIN_LINC) -c main.cpp global.cpp
+
+win_game_build:
+	$(WIN_CC) -o $(WIN_OUT) $(WIN_OBJ) $(WIN_LIBP) $(WIN_LIB)
+	copy $(WIN_OUT) ..\bin
+
+win_game_clean:
+	erase *.o
+	erase $(WIN_OUT)
+
+win_game_run:
+	..\bin\$(WIN_OUT)
+
