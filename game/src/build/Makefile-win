@@ -1,6 +1,6 @@
 WIN_CC = g++ -w
 WIN_SP = ../../sparky_2.0/sparky/
-WIN_LINC = -I$(SP) -I$(SP)vendor/GLEW/include -I$(SP)vendor/SDL2_64bit/include -I$(SP)vendor/SDL2_64bit/include/SDL2 -I$(SP)vendor/imgui/
+WIN_LINC = -I$(SP) -I$(SP)vendor/GLEW/include -I$(SP)vendor/SDL2_64bit/include -I$(SP)vendor/SDL2_64bit/include/SDL2 -I$(SP)vendor/imgui/ -I../../vendor/json/
 WIN_LIBP = -L../../sparky_2.0/bin/
 WIN_LIB = -lsparky -lmingw32 -lopengl32 -lUser32 -lGdi32 -lShell32 -lglew32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -limm32
 WIN_CPP = *.cpp
@@ -9,6 +9,8 @@ WIN_OUT = game_win.exe
 
 win_build:
 	@echo "==-- Compiling for windows --=="
+	$(MAKE) --no-print-directory win_game_cmp_json
+	$(MAKE) --no-print-directory win_game_cmp_sock
 	$(MAKE) --no-print-directory win_game_cmp_mob
 	$(MAKE) --no-print-directory win_game_cmp_player
 	$(MAKE) --no-print-directory win_game_cmp_item
@@ -20,6 +22,13 @@ win_build:
 	$(MAKE) --no-print-directory win_game_build
 	$(MAKE) --no-print-directory win_game_clean
 	@echo "==-- Sucessfully compiled --=="
+
+
+win_game_cmp_json:
+	$(CC) $(LINC) -c ../../vendor/json/jsoncpp.cpp
+
+win_game_cmp_sock:
+	$(CC) $(LINC) -c network/*.cpp
 
 win_game_cmp_mob:
 	$(WIN_CC) $(WIN_LINC) -c mob/*.cpp

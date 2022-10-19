@@ -1,7 +1,7 @@
 CC = g++ -w
 
 SP = ../../sparky_2.0/sparky/
-LINC = -I$(SP) -I/usr/include/SDL2 -I$(SP)vendor/imgui/
+LINC = -I$(SP) -I/usr/include/SDL2 -I$(SP)vendor/imgui/ -I../../vendor/json/
 LIBP = -L../../sparky_2.0/bin/
 LIB = -lsparky -lGL -lGLU -lGLEW -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -ljxl
 
@@ -11,6 +11,8 @@ OUT = game_linux
 
 linux_build:
 	@echo "==-- Compiling for linux --=="
+	$(MAKE) --no-print-directory linux_game_cmp_json
+	$(MAKE) --no-print-directory linux_game_cmp_sock
 	$(MAKE) --no-print-directory linux_game_cmp_mob
 	$(MAKE) --no-print-directory linux_game_cmp_player
 	$(MAKE) --no-print-directory linux_game_cmp_item
@@ -22,6 +24,12 @@ linux_build:
 	$(MAKE) --no-print-directory linux_game_build
 	$(MAKE) --no-print-directory linux_game_clean
 	@echo "==-- Sucessfully compiled --=="
+
+linux_game_cmp_json:
+	$(CC) $(LINC) -c ../../vendor/json/jsoncpp.cpp
+
+linux_game_cmp_sock:
+	$(CC) $(LINC) -c network/*.cpp
 
 linux_game_cmp_mob:
 	$(CC) $(LINC) -c mob/*.cpp

@@ -14,10 +14,10 @@
 
 // Button sprite informations
 #define BUTTON_IMG "assets/buttons.png"
-#define BUTTON_MAX_CNT_X 4
-#define BUTTON_MAX_CNT_Y 1
-#define BUTTON_W 181
-#define BUTTON_H 47
+#define BUTTON_MAX_CNT_X 2
+#define BUTTON_MAX_CNT_Y 3
+#define BUTTON_W 150
+#define BUTTON_H 45
 
 // Inventory sprite informations
 #define INVENT_IMG "assets/inventory.png"

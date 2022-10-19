@@ -19,13 +19,3 @@ void Global::init()
 	Global::ui_e_manager = Global::ui_renderer->get_entity_manager();
 	Global::white        = std::make_shared<Sparky::Texture>();
 }
-
-void Global::clean()
-{
-	Global::camera.reset();
-	Global::renderer.reset();
-	Global::ui_renderer.reset();
-	Global::e_manager.reset();
-	Global::ui_e_manager.reset();
-	Global::white.reset();
-}

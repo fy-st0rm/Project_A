@@ -1,7 +1,21 @@
 #pragma once
+
+// Std's includes
+#include <thread>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <errno.h>
+#include <arpa/inet.h>
+
+// Socket includes
+#include <sys/socket.h>
+#include <netinet/in.h>
+
 #include "sparky.h"
 #include "util.h"
 #include "define.h"
+#include "json/json.h"
 
 // Button states
 enum ButtonState
@@ -22,8 +36,9 @@ enum ButtonState
 #define MAX_INVENTORY_SIZE 4
 
 // Scene names
-#define GAME      "game"
-#define MAIN_MENU "main_menu"
+#define GAME       "game"
+#define MAIN_MENU  "main_menu"
+#define ERROR_PAGE "error_page"
 
 // Global variables
 class Global
@@ -39,5 +54,4 @@ public:
 
 public:
 	static void init();
-	static void clean();
 };
