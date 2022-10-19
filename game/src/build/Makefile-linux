@@ -1,13 +1,13 @@
 CC = g++ -w
 
 SP = ../../sparky_2.0/sparky/
-LINC = -I$(SP) -I$(SP)vendor/GLEW/include -I$(SP)vendor/SDL2_64bit/include -I$(SP)vendor/SDL2_64bit/include/SDL2 -I$(SP)vendor/imgui/
+LINC = -I$(SP) -I/usr/include/SDL2 -I$(SP)vendor/imgui/
 LIBP = -L../../sparky_2.0/bin/
-LIB = -lsparky -lmingw32 -lglew32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -limm32
+LIB = -lsparky -lGL -lGLU -lGLEW -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -ljxl
 
 CPP = *.cpp
 OBJ = *.o
-OUT = game
+OUT = game_linux
 
 linux_build:
 	@echo "==-- Compiling for linux --=="
@@ -49,7 +49,7 @@ linux_game_cmp_main:
 
 linux_game_build:
 	$(CC) -o $(OUT) $(OBJ) $(LIBP) $(LIB)
-	mv $(OUT) ..\bin
+	mv $(OUT) ../bin/
 
 linux_game_clean:
 	rm *.o

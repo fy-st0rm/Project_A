@@ -5,7 +5,7 @@ WIN_LIBP = -L../../sparky_2.0/bin/
 WIN_LIB = -lsparky -lmingw32 -lopengl32 -lUser32 -lGdi32 -lShell32 -lglew32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -limm32
 WIN_CPP = *.cpp
 WIN_OBJ = *.o
-WIN_OUT = game.exe
+WIN_OUT = game_win.exe
 
 win_build:
 	@echo "==-- Compiling for windows --=="

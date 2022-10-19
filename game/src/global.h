@@ -13,7 +13,7 @@ enum ButtonState
 // Global macros
 #define MAX_QUAD_CNT 100
 #define ASPECT_RATIO 1.77778 // 16:9
-#define WIN_WIDTH  1280
+#define WIN_WIDTH  1366
 #define WIN_HEIGHT WIN_WIDTH / ASPECT_RATIO
 #define ZOOM_WIDTH  520
 #define ZOOM_HEIGHT ZOOM_WIDTH / ASPECT_RATIO
